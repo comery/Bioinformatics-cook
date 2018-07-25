@@ -1,4 +1,5 @@
-﻿#### summary
+﻿![example](http://ogj9k5cjf.bkt.clouddn.com/NC_031379.png)
+#### summary
 circos is very powerful software to illustrate genetic information, especially for mitochondrion and chloroplast genomes. Here I provide a useful perl script to convert genome annotation with genebank format to all features as circos input, and then draw a circos image.
 
 #### requirement
@@ -39,7 +40,7 @@ background		=	white
 #background		=	./background.png
 ```
 
-- for “auto_depth” mode, you also need a genebank input file and configure file, but what you should care for is path setted in head of configure file.
+- for “auto_depth” mode, you also need a genebank input file and configure file, but what you should notice carefully is path setted in head of configure file - "circos_path", "bwa", and "samtools".
 
 ```
 # where circos you install
