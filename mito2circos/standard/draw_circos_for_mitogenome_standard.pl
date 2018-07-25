@@ -253,8 +253,8 @@ while (my $seq_obj=$in->next_seq()) {
 				print FEA "mt1\t$end\t$end\tfill_color=black,r0=0.98r,r1=1.020r\n";
 				print FEA "mt1\t$start\t$end\tfill_color=$conf{'tRNA'},r0=0.98r,r1=1.020r\n";
 			}
-			if ($feature->has_tag('gene')) {
-				for $val ($feature->get_tag_values('gene')){
+			if ($feature->has_tag('product')) {
+				for $val ($feature->get_tag_values('product')){
 				
 					print TEXT "mt1\t$start\t$end\t$val\n";
 				}
