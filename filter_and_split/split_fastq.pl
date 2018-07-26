@@ -31,7 +31,7 @@ GetOptions(
 			"o:s" =>\$Outdir,
 			"help" =>\$Help
 			);
-die `pod2text $0` if ($Help);
+die `pod2text $0` if ($Help || ! $FQ1);
 $Outdir ||= "./";#default outdir is current dir
 `mkdir -p $Outdir/split_1 $Outdir/split_2`;
 open IN1,"<:gzip", "$FQ1" or die "Can't open $FQ1 !";
