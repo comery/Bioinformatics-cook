@@ -1,19 +1,21 @@
-﻿![example](http://ogj9k5cjf.bkt.clouddn.com/NC_031379.png)
+![example](http://ogj9k5cjf.bkt.clouddn.com/NC_031379.png)
 example: Fruhstorferiola huayinensis mitochondrion, complete genome, download from NCBI. NC_031379
 #### Summary
 circos is very powerful software to illustrate genetic information, especially for mitochondrion and chloroplast genomes. Here I provide a useful perl script to convert genome annotation with genebank format to all features as circos input, and then draw a circos image.
 
 #### Requirement
 
-overall, circos must be installed in your computer, though it is a little difficult to install.
+Overall, circos must be installed in your computer, though it is a little difficult to install.
 and some perl modules are required too.
 
 > Cwd, FindBin, Statistics::Descriptive, Bio::Perl
 
 
  Actually, there are two versions, one is “standard”, and the other is “auto_depth”. Literally, auto_depth means automatically calculate depth by mapping, so you need give fastq file and associaged softwares.
+
 - for “standard” mode, you just need a genebank input file, and general configure file, like below.
-```
+
+```perl
 # where circos you install
 circos_path		=	/usr/local/bin/circos
 #color
@@ -25,7 +27,7 @@ gc				=	yes
 win				=	50
 gc_fill			=	146,197,222
 # whether draw depth abundance circle
-depth			=	yes
+depth			=	no
 depth_fill		= 	5,113,176
 depth_file		=	../data/example.depth.txt
 # whether draw base around circle
@@ -47,7 +49,7 @@ let's get ball running.
 perl draw_circos_for_mitogenome_auto_depth.pl -gb ../example.gb -conf mitogenome.auto_depth.conf 
 ```
 
-- for “auto_depth” mode, you also need a genebank input file and configure file, but what you should notice carefully is path setted in head of configure file - "circos_path", "bwa", and "samtools", as a result, paired fastq file should give in before file.
+- for “auto\_depth” mode, you also need a genebank input file and configure file, but what you should notice carefully is path setted in head of configure file - "circos_path", "bwa", and "samtools", as a result, paired fastq file should give in before file.
 
 ```
 # where circos you install
