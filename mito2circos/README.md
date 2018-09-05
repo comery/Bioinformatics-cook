@@ -90,3 +90,8 @@ perl draw_circos_for_mitogenome_standard.pl -gb ../example.gb -conf mitogenome.s
 
 ```
 
+#### See more
+recommend some good learning resources:
+
+- http://qiubio.com/circos教程
+- http://circos.ca/
