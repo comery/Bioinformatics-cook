@@ -35,9 +35,70 @@ with open(args.conf, 'r') as fh_conf:
 print("read configures file done!")
 if os.path.exists(configures['outdir']) == False:
     os.mkdir(configures['outdir'])
+if os.access(configures['circos_path'],os.X_OK) == False:
+	print("circos path is bad!")
+	exit(0)
+
+out = subprocess.getoutput("awk \'{print $1}\' " +args.map+ "|sort|uniq|wc -l") ## get chrs number
+refs_num = int(out)
+print(str(refs_num) + " chrs found in " + args.map +"\n")
+''' colors theme '''
+colors = []
+if refs_num < 3:
+    bmap = brewer2mpl.get_map('Paired', 'Qualitative', 3, reverse=True)
+    colors = bmap.colors
+    print("colors theme is: Paired,Qualitative,3. \nsee more:http://colorbrewer2.org\n")
+
+elif refs_num >= 3 and refs_num < 13:
+    bmap = brewer2mpl.get_map('Paired', 'Qualitative', 12, reverse=True)
+    colors = bmap.colors
+    print("colors theme is: Paired,Qualitative,12. \nsee more:http://colorbrewer2.org\n")
+elif refs_num >= 13 and refs_num < 34:
+    brbg = brewer2mpl.get_map('Set3', 'Qualitative', 12, reverse=True)
+    colors = brbg.colors
+    piyg = brewer2mpl.get_map('Paired', 'Qualitative', 12, reverse=True)
+    colors += piyg.colors
+    paired = brewer2mpl.get_map('PiYG', 'Diverging', 11, reverse=True)
+    colors += paired.colors
+    print("colors theme is: [Set3,Qualitative,12],[PiYG,Diverging,11],[Paired,Qualitative,12]. \nsee more:http://colorbrewer2.org\n")
+else:
+    print("Sorry, It just can handle 34 chrs because too many chrs will make a mass!, however, you can change this code for suit\n")
+    exit(0)
+
+ 
+''' depth feature '''
+
+max_depth = 0
+name_id = {}
+chrs_in_depth = []
+fh_depth = open(configures['outdir'] + "/depth.txt", 'w')
+fh_fea = open(configures['outdir'] + '/feature.txt', 'w')
+try:
+    fh_map = open(args.map,'r')
+except Exception as e:
+    print(e)
+    exit(0)
+for m in fh_map:
+    a = m.split("\t")
+    name = a[0]
+    pos = str(a[1])
+    dep = a[2]
+    if name not in chrs_in_depth:
+        chrs_in_depth.append(name)
+        name_id[name] = len(chrs_in_depth)
+
+    if int(dep) > max_depth:
+        max_depth = int(dep)
+    this_color = ','.join(str(v) for v in colors[name_id[name]-1])
+    fh_depth.write("hs" + str(name_id[name])  + " " + pos + " " + pos + " " + dep )
+    fh_fea.write("hs" + str(name_id[name])  + " " + pos + " " + pos +\
+                 " fill_color="+ this_color+",r0=0.775r,r1=0.825r" + "\n")
+
+fh_depth.close()
+fh_fea.close()
 
 seq = {}
-chrs_id = {}
+seq_len = {}
 for line in fh:
     if line.startswith('>'):
         name=line.replace('>','')
@@ -47,69 +108,20 @@ for line in fh:
         seq[name]+= line.replace('\n','')
 fh.close()
 
-num = 0
 for k,v in seq.items():
-    seq[k] = len(v) # change original id , sequence pairs into id-lenght
-    num += 1
-    chrs_id[k] = num
+    seq_len[k] = len(v) # change original id , sequence pairs into id-lenght
 
-fh.close()
-
-chrs_in_depth = []
-
-''' depth feature '''
-
-max_depth = 0
-fh_depth = open(configures['outdir'] + "/depth.txt", 'w')
-try:
-    fh_map = open(args.map,'r')
-except Exception as e:
-    print(e)
-    exit(0)
-for m in fh_map:
-    a = m.split("\t")
-    name = a[0]
-    if name not in chrs_in_depth:
-        chrs_in_depth.append(name)
-    pos = str(a[1])
-    dep = a[2]
-    if int(dep) > max_depth:
-        max_depth = int(dep)
-    fh_depth.write("hs" + str(chrs_id[name])  + " " + pos + " " + pos + " " + dep )
-
-fh_depth.close()
-refs_num = len(chrs_in_depth)
-
-''' colors theme '''
-colors = []
-if refs_num < 3:
-    bmap = brewer2mpl.get_map('Paired', 'Qualitative', 3, reverse=True)
-    colors = bmap.colors
-
-elif refs_num >= 3 and refs_num < 13:
-    bmap = brewer2mpl.get_map('Paired', 'Qualitative', 12, reverse=True)
-    colors = bmap.colors
-elif refs_num >= 13 and refs_num < 34:
-    brbg = brewer2mpl.get_map('BrBG', 'Diverging', 11, reverse=True)
-    colors = brbg.colors
-    piyg = brewer2mpl.get_map('PiYG', 'Diverging', 11, reverse=True)
-    colors += piyg.colors
-    paired = brewer2mpl.get_map('Paired', 'Qualitative', 12, reverse=True)
-    colors += paired.colors
-else:
-    print("Sorry, too many chrs, I can not deal that!")
-    exit(0)
-
-'''print("colors for usage: " + colors)'''
+seq.clear() ## clean dict of seq, it's useless
 
 ''' karyotype '''
 
 fh_karyo = open(configures['outdir'] + '/karyotype.txt', 'w')
 
-for k in range(0,refs_num):
-    this_color = ','.join(str(v) for v in colors[k])
-    fh_karyo.write("chr" + str(k+1) + " - " +  "hs" + str(k+1) + " " + chrs_in_depth[k] +\
-                    " 0 " + str(seq[chrs_in_depth[k]]) + " " + this_color + "\n")
+for k in sorted(name_id.keys()):
+    index = name_id[k]
+    this_color = ','.join(str(v) for v in colors[index-1])
+    fh_karyo.write("chr" + str(index) + " - " +  "hs" + str(index) + " " + k +\
+                    " 0 " + str(seq_len[k]) + " " + this_color + "\n")
 fh_karyo.close()
 
 
@@ -147,7 +159,7 @@ auto_alpha_steps  = 5
 
 <spacing>
 default = 0.01r
-break   = 0.1r
+break   = 0.02r
 </spacing>
 
 ###<<include ideogram.position.conf>>
@@ -161,8 +173,8 @@ stroke_color     = black
 ###<<include ideogram.label.conf>>
 show_label       = yes
 label_font       = bolditalic
-label_radius     = dims(image,radius) + 0.01r
-#label_radius     = 0.8r + 40p
+#label_radius     = dims(image,radius) + 0.01r
+label_radius     = 0.9r
 label_size       = 15p
 label_parallel   = yes
 label_case       = lowwer
@@ -278,10 +290,21 @@ fill_color   = dred_a1
 </plot>
 </plots>
 
+#-----------------highlights------------------
+<highlights>
+
+# coverage
+<highlight>
+''')
+    circos.write("file         = "+ configures['outdir'] + "/feature.txt" + "\n")
+    circos.write('''
+</highlight>
+
+</highlights>
+
 <<include etc/housekeeping.conf>>
 
-'''
-)
+''')
 
     print("Drawing circos.\n")
 cmd = configures['circos_path'] + " -conf " + configures['outdir'] + "/circos.conf"
