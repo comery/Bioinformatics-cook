@@ -8,7 +8,7 @@ circos is very powerful software to illustrate genetic information, especially f
 
 Overall, circos must be installed in your computer, though it is a little difficult to install.
 
-then there file are needed:
+then there file are needed: (see these files in current directory)
 
 - references.fa
 - depth.txt
