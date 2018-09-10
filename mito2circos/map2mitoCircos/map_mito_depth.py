@@ -119,8 +119,10 @@ fh_karyo = open(configures['outdir'] + '/karyotype.txt', 'w')
 
 for k in sorted(name_id.keys()):
     index = name_id[k]
+    sp = k.split("_",2)
+    spname = sp[2]
     this_color = ','.join(str(v) for v in colors[index-1])
-    fh_karyo.write("chr" + str(index) + " - " +  "hs" + str(index) + " " + k +\
+    fh_karyo.write("chr" + str(index) + " - " +  "hs" + str(index) + " " + spname +\
                     " 0 " + str(seq_len[k]) + " " + this_color + "\n")
 fh_karyo.close()
 
@@ -174,8 +176,8 @@ stroke_color     = black
 show_label       = yes
 label_font       = bolditalic
 #label_radius     = dims(image,radius) + 0.01r
-label_radius     = 0.9r
-label_size       = 15p
+label_radius     = 0.915r
+label_size       = 17p
 label_parallel   = yes
 label_case       = lowwer
 #label_format     = eval(sprintf("chr%s",var(label)))
@@ -275,7 +277,7 @@ spacing   = 0.06r
 
 <rule>
 condition    = var(value) > 5
-color        = dred
+color        = dred_a1
 fill_color   = dred_a1
 </rule>
 
