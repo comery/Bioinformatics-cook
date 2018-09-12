@@ -1,3 +1,6 @@
+## **THIS DIRECTORY HAS BEEN MOVED TO => comery/Data-Visulization**  
+this copy will be forzen!
+
 ![example](http://ogj9k5cjf.bkt.clouddn.com/NC_031379.png)
 example: Fruhstorferiola huayinensis mitochondrion, complete genome, download from NCBI. NC_031379
 #### Summary
