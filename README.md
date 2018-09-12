@@ -1,4 +1,4 @@
-# Bioinformatics-Perl
-perl scripts for bioinformatics analysis
+# Bioinformatics-cook
+perl and python scripts for bioinformatics analysis
 
-I collected some perl scripts for daily wrok.
+I collected some scripts for daily wrok.
