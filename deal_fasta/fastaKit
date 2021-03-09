@@ -41,7 +41,7 @@ parser.add_argument('-n', metavar='<STR>', type=str,
                     dest='name_exact', help="target ID exactally")
 
 parser.add_argument('-ex', metavar='<STR>', type=str,
-                    dest='name_excluded', help="excluded name, only one name")
+                    dest='name_excluded', help="excluded name")
 
 parser.add_argument('-rg', metavar='<STR>', type=str,
                     dest='name_regx', help="target regx word to find sequences")
