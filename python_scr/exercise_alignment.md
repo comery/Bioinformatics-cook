@@ -15,6 +15,7 @@ superscaffold_chr1.mat	147138240	255412214	3	W	JAAOME010000006.1	1	108273975	-
 ```
 
 'W' WGS scaffold
+
 'N' 代表gap
 
 已知变异位点的坐标，是根据superscaffold_chr1.pat 或者superscaffold_chr1.mat 生成的，现在需要转换成原始scaffold上的坐标，比如 superscaffold_chr1.pat	1对应JAAOMF010000039.1 的1
@@ -24,6 +25,12 @@ superscaffold_chr1.mat	147138240	255412214	3	W	JAAOME010000006.1	1	108273975	-
 
 温馨提示：
 注意 序列的方向，“-” 表示反向互补序列。
+
+数据：
+
+[test.makeup.agp](./test.makeup.agp)
+
+[test.sv.filterN.bed](./test.sv.filterN.bed)
 
 ### exercise 2
 
