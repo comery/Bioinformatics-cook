@@ -172,11 +172,11 @@ def read_fasta(fp):
     for line in fp:
         line = line.rstrip()
         if line.startswith(">"):
-            if name: yield (name, "''.join(seq))
+            if name: yield (name, "".join(seq))
             name, seq = line, []
         else:
             seq.append(line)
-    if name: yield (name, "''.join(seq))
+    if name: yield (name, "".join(seq))
 
 with open('f.fasta') as fp:
     for name, seq in read_fasta(fp):
