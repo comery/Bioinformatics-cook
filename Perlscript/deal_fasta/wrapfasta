@@ -1,0 +1,37 @@
+#!/usr/bin/perl 
+
+my $usage = "
+
+This script is to wrap fasta as a certain number(you give)	
+
+	perl $0 <*.fa> <number>" ;
+	
+die "$usage" unless (@ARGV == 2); 
+
+my $genome=shift;
+my $number = shift;
+
+if ($number >= 200){
+	print "too many base in a line!";
+	exit;
+
+}
+open (IN,$genome) or die $!;
+$/=">";<IN>;$/="\n";
+while (<IN>) {
+	chomp;
+	my $id = $_;
+	print ">$id\n";
+	$/=">";
+	my $seq=<IN>;
+	chomp $seq;
+	$seq =~ s/\n//g;
+	my $length=length $seq;
+	for (my $i=0; $i<$length; $i+=$number) {
+		my $part=substr($seq,$i,$number);
+		print "$part\n";
+	}
+	$/="\n";
+}
+close IN;
+	
