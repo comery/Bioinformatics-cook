@@ -288,9 +288,11 @@ def main(args):
             total_number = int(cmd_result.decode('utf-8'))
             average_seq_number = workoutNumber(total_number, args.cutbyfiles)
         if args.cutbyseqs or args.cutbyfiles:
-            outdir = os.path.abspath(args.output + "_cut")
+            outdir = os.path.abspath(args.output)
             if os.path.exists(outdir) == False:
                 os.mkdir(outdir)
+            else:
+                sys.exit(f"{outdir} exists, please remove it first!")
             suffix = 1
             tmp = average_seq_number
             while tmp < len(seq_container) and suffix < args.cutbyfiles:

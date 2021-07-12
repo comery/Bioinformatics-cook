@@ -122,6 +122,7 @@ class Alignment(object):
 
     def get_qry_base(self, block_order, pos):
         index = self.locate_line(block_order, pos)
+        ic(index)
         target_line_ref = self.blocks_ref[block_order][index]
         target_line_qry = self.blocks_qry[block_order][index]
         strand = self.strand[block_order]
@@ -216,9 +217,12 @@ def main():
                 for p1, p2 in Target_BED[a]:
                     if p1 == p2: # for snp, speed it up
                         if alignment.within_block(order, p1): # p1 in this block, then find the coordinate site in qry
-                            p1_qpos = alignment.get_qry_base(order, p1)
-                            addtwodimdict(QRY_POS, a, p1, (b,p1_qpos))
-                            addtwodimdict(QRY_POS, a, p2, (b,p1_qpos))
+                            try:
+                                p1_qpos = alignment.get_qry_base(order, p1)
+                                addtwodimdict(QRY_POS, a, p1, (b,p1_qpos))
+                                addtwodimdict(QRY_POS, a, p2, (b,p1_qpos))
+                            except TypeError:
+                                ic(p1, p2)
                     else:
                         if alignment.within_block(order, p1):
                             p1_qpos = alignment.get_qry_base(order, p1)

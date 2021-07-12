@@ -2,12 +2,10 @@
 
 import sys
 #import argsparse
+from icecream import ic
 
 if len(sys.argv) < 4:
-    print("Usage: python3 {} {} {} {}".format(sys.argv[0],
-                                              "<blastout|file>",
-                                              "<topmatch|int>",
-                                              "<tohit|int>"))
+    print(f"python3 {sys.argv[0]} <blastout> <topmatch|int> <tohit|int> [desc.txt|option]")
     exit()
 
 def parser_blast(file):
@@ -31,9 +29,21 @@ def parser_blast(file):
         yield target_match
 
 
+def getinfo(desc):
+    info = {}
+    with open(desc, 'r') as fh:
+        for i in fh:
+            if i.startswith("#"):continue
+            tmp = i.strip().split("\t")
+            info[tmp[0]] = tmp[1]
+    return info
+
+
 def main():
     match_lim = int(sys.argv[2])
     hit_lim = int(sys.argv[3])
+    if len(sys.argv) > 4:
+        descs = getinfo(sys.argv[4])
 
     for arr in parser_blast(sys.argv[1]):
        # print(len(arr))
@@ -44,23 +54,29 @@ def main():
         for line in arr:
             tmp = line.split("\t")
             querry = tmp[1]
+            if len(sys.argv) > 4:
+                if querry in descs:
+                    info = descs[querry]
+                    tmp.append(info)
+                else:
+                    tmp.append("-")
             if pre == " ":
                 match = 1
                 pre = querry
                 hit[pre] = 1
-                output.append(line)
+                output.append("\t".join(tmp))
             elif querry == pre and hit[querry] >= hit_lim:
                 continue
             elif querry == pre:
                 hit[querry] += 1
-                output.append(line)
+                output.append("\t".join(tmp))
             elif match >= match_lim:
                 break
             else:
                 match += 1
                 pre = querry
                 hit[pre] = 1
-                output.append(line)
+                output.append("\t".join(tmp))
 
         print("\n".join(output))
 
