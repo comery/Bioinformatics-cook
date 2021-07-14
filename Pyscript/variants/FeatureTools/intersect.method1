@@ -1,0 +1,69 @@
+def read_and_parse_line(fh):
+    # It gets the next line,
+    #   strip any whitespace from the end,
+    #   split it on whitespace into fields.
+    return fh.next().rstrip().split()
+
+def append_to_result(result, line):
+    (scaffold1, start1, end1, transcript1, type1, start2, end2, comment2) = line
+    # Making start and end real integers so you can work with them as such.
+    result.append((scaffold1, int(start1), int(end1), transcript1, type1, int(start2), int(end2), comment2))
+
+# These will be our result lines.
+result = []
+# With makes sure the files are properly closed afterwards.
+with open('file1') as file1, open('file2') as file2:
+    # Getting the iterator on the files.
+    file1 = iter(file1)
+    file2 = iter(file2)
+    try:
+        (scaffold1, start1, end1, transcript1, type1) = read_and_parse_line(file1)
+        read_second = True
+        while True:
+            if read_second:
+                try:
+                    (scaffold2, start2, end2, comment2) = read_and_parse_line(file2)
+                except StopIteration:
+                    print("File 2 ended.")
+                    # Nothing more in the second file.
+                    # Outputting the original line
+                    result.append((scaffold1, start1, end1, transcript1, type1, 0, 0, None))
+                    # Reading in a new line from the first file.
+                    (scaffold1, start1, end1, transcript1, type1) = read_and_parse_line(file1)
+            if int(start1) <= int(start2):
+                # Second file record starts after the first file record.
+                if int(end1) >= int(end2):
+                    # And the second file record ends before the first file record.
+                    # = MATCH!!!
+                    print("We've found a match: [%s-[%s-%s]-%s]" % (start1, start2, end2, end1))
+                    # Write the combined line.
+                    result.append((scaffold1, start1, end1, transcript1, type1, start2, end2, comment2))
+                    ## READ BOTH
+                    (scaffold1, start1, end1, transcript1, type1) = read_and_parse_line(file1)
+                    read_second = True
+                else:
+                    # The second file record ends AFTER the first file record.
+                    print("No match in second file: [%s-%s]" % (start1, end1))
+                    # So writing out the unmodified line.
+                    result.append((scaffold1, start1, end1, transcript1, type1, 0, 0, None))
+                    ## READ 1
+                    (scaffold1, start1, end1, transcript1, type1) = read_and_parse_line(file1)
+                    read_second = False
+            else:
+                # This is thrown away in your example.
+                print("No match in the first file for: [%s-%s]" % (start2, end2))
+                # Trying the next line in the second file.
+                read_second = True
+    except StopIteration:
+        print("File 1 ended.")
+# Printing a clean line after all the logging above.
+print("")
+
+# Printing the result to screen.
+# I guess you want to do more stuff with the data and not just write it to file.
+for line in result:
+    # The 8th element being equal to None indicates there was no match.
+    if line[7] == None:
+        print("%s\t%s\t%s\t%s\t%s" % line[:5])
+    else:    
+        print("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s" % line)
