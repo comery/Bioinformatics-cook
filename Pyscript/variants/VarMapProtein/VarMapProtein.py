@@ -3,22 +3,7 @@
 import sys
 import argparse
 
-
-class Feature:
-
-    def __init__(self, )
-
-
-
-
-
-
-
-
-
-
-
-
+def read_gff()
 
 def main(args):
 

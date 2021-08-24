@@ -1,0 +1,11 @@
+/hwfssz1/ST_DIVERSITY/F16HQSB1SY2806_InsectTrans/USER/mengguanliang/work/MitoZ/01.arthropod/05.assemble/01.quick_mode/26.SRR611174/02.run_relaxed_contamination_filter/03.annotate/SRR611174.result/SRR611174_mitoscaf.fa.gbf
+
+
+ --fastq1 /hwfssz1/ST_DIVERSITY/F16HQSB1SY2806_InsectTrans/USER/mengguanliang/work/MitoZ/01.arthropod/04.3G_cleandata_and_cutReads/SRR611174.3G.1.fq.gz
+
+  --fastq2 /hwfssz1/ST_DIVERSITY/F16HQSB1SY2806_InsectTrans/USER/mengguanliang/work/MitoZ/01.arthropod/04.3G_cleandata_and_cutReads/SRR611174.3G.2.fq.gz 
+
+  --fastq_read_length 92 --insert_size 489
+
+
+--fastq1 /hwfssz1/ST_DIVERSITY/F16HQSB1SY2806_InsectTrans/USER/mengguanliang/work/MitoZ/01.arthropod/04.3G_cleandata_and_cutReads/SRR941879.3G.1.fq.gz --fastq2 /hwfssz1/ST_DIVERSITY/F16HQSB1SY2806_InsectTrans/USER/mengguanliang/work/MitoZ/01.arthropod/04.3G_cleandata_and_cutReads/SRR941879.3G.2.fq.gz --fastq_read_length 95 --insert_size 188

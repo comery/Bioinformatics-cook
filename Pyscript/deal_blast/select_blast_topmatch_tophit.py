@@ -34,8 +34,8 @@ def getinfo(desc):
     with open(desc, 'r') as fh:
         for i in fh:
             if i.startswith("#"):continue
-            tmp = i.strip().split("\t")
-            info[tmp[0]] = tmp[1]
+            tmp = i.strip().split()
+            info[tmp[0]] = " ".join(tmp[1:])
     return info
 
 
