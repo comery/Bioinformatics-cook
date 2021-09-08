@@ -69,6 +69,8 @@ $mummer/dnadiff -d $p.delta -p $p.diff
 ```
 需要根据TEST.diff.1coords 生成比对信息进行处理。
 
+#### 参考脚本
+```demo/replaceBlock_v2.py```
 
 ### exercies 3
 
@@ -81,3 +83,6 @@ $mummer/dnadiff -d $p.delta -p $p.diff
 ```
 
 需要做的是，将chr1-1（ref）上面的坐标转到querry对应的坐标，类似于liftover的功能。
+
+#### 参考脚本
+```demo/renovateFeature.py```
