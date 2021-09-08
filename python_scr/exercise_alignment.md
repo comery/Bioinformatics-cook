@@ -33,7 +33,9 @@ superscaffold_chr1.mat	147138240	255412214	3	W	JAAOME010000006.1	1	108273975	-
 [test.sv.filterN.bed](./test.sv.filterN.bed)
 
 #### 两个参考脚本
+
 ```demo/RecoverOriginalPos.py``` 这个消耗内存比较大
+
 ```demo/convertPos_by_agp.py``` 这个消耗内存很小，而且比较快，这个用了一个比较特殊的方式，模拟人处理这种数据的做法，就是先定位到你要转换的坐标时落在那个区域，然后根据区域的起始终止，以及方向去转换坐标，所以可以将转换坐标的这个过程看成一个函数，然后存到一个字典的值，而这个字典的键就是具体的scaffold的ID和起始终止信息。另外注意这只是个参考，具体的输入文件格式有所不同，需要转换的坐标，只需要scaffold_id 和position两列即可。
 
 ### exercise 2
