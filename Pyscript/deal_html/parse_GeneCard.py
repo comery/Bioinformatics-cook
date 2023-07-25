@@ -73,7 +73,7 @@ def main():
     with open(sys.argv[1], 'r') as fh:
         for i in fh:
             gene = i.strip()
-            print("#### " + gene )
+            print("## " + gene )
             infile = inputdir + "/" + gene + ".html"
             if os.path.exists(infile) == False:
                 print("Can not find html of {} in {}".format(gene, inputdir))
@@ -85,7 +85,7 @@ def main():
                 # summary info
                 print("\n### Summary")
                 summaries = summary_info(soup)
-                makeup_md(summaries)
+                #makeup_md(summaries)
                 #translation(summaries, src='en', dest='zh-CN')
                 #tmp_tab = [gene, summaries, translation]
                 #print("\t".join(tmp_tab))
