@@ -1,0 +1,18 @@
+---
+case:
+  - kiz212-DHL-1
+  - kiz212-DHR-2
+control:
+  - kiz212-w-1
+  - kiz212-w-17
+  - kiz212-w-18
+  - kiz212-w-21
+  - kiz212-w-22
+  - kiz212-w-31
+  - kiz212-w-32
+  - kiz212-w-35
+  - kiz212-w-5
+  - kiz212-w-t-7
+missing: 0.4
+positive_in_case: 1
+filter: yes
