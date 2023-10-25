@@ -1,1 +1,0 @@
-perl trim_10x_adapter_PE.pl /zfssz6/CNGB_DATA/Project_data/ST_DIVERSITY/P18Z10200N0160/10x/mCalJac1_S1_L002_R1_001.fastq.gz /zfssz6/CNGB_DATA/Project_data/ST_DIVERSITY/P18Z10200N0160/10x/mCalJac1_S1_L002_R2_001.fastq.gz S1 16
